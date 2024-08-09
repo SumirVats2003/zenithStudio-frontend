@@ -7,7 +7,6 @@ import './Playground.css'
 import Navbar from '../components/Navbar'
 
 const Playground = () => {
-  // Initialize state from local storage or default values
   const storedCode = localStorage.getItem('code') || '// Start coding here...'
   const storedLanguage = localStorage.getItem('language') || 'javascript'
   const storedFontSize = parseInt(localStorage.getItem('fontSize'), 10) || 14
@@ -85,12 +84,22 @@ const Playground = () => {
   const handleRunCode = async () => {
     setOutput('Running...')
 
+    let modLang
+    if (language == 'javascript') {
+      modLang = 'nodejs'
+    }
+    if (language == 'python') {
+      modLang = 'python3'
+    } else {
+      modLang = language
+    }
+
     const requestBody = {
       clientId: 'f20ac288b8c74e8ca64627ab90d4a2d5',
       clientSecret:
         '217da182de1be8a3e827cfa408957a7dae9e226d33a9d9d5d257d1dafa624d78',
       script: code,
-      language: language,
+      language: modLang,
       versionIndex: '3',
       stdin: input,
     }
@@ -119,7 +128,6 @@ const Playground = () => {
       setOutput(`Error: ${error.message}`)
     }
 
-    // Save state to local storage
     localStorage.setItem('code', code)
     localStorage.setItem('language', language)
     localStorage.setItem('fontSize', fontSize)
