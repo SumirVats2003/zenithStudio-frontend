@@ -16,6 +16,7 @@
   background-color: #282c34;
   border: 1px solid #333;
   height: 100%;
+  font-family: 'JetBrains Mono', monospace;
 }
 
 .language-selector {
