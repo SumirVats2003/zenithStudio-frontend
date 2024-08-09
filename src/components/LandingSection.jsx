@@ -1,7 +1,6 @@
 import React from 'react'
 import { Box, Typography, Button, useTheme } from '@mui/material'
 import { keyframes } from '@emotion/react'
-import Navbar from './Navbar'
 import Logo from '../assets/zblack.png'
 
 const fadeIn = keyframes`
@@ -29,7 +28,6 @@ const LandingSection = () => {
 
   return (
     <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
-      <Navbar />
       <Box
         sx={{
           display: 'flex',
@@ -89,7 +87,7 @@ const LandingSection = () => {
             animation: `${slideIn} 1s ease-out`,
           }}
           onClick={() => {
-            window.location.href = '/editor'
+            window.location.href = '/home'
           }}
         >
           Get Started
