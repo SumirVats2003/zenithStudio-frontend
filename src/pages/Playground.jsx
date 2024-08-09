@@ -7,10 +7,13 @@ import './Playground.css'
 import Navbar from '../components/Navbar'
 
 const Playground = () => {
-  const [code, setCode] = useState('// Start coding here...')
+  const storedCode = localStorage.getItem('code') || '// Start coding here...'
+  const storedLanguage = localStorage.getItem('language') || 'javascript'
+
+  const [code, setCode] = useState(storedCode)
   const [output, setOutput] = useState('')
   const [input, setInput] = useState('')
-  const [language, setLanguage] = useState('javascript')
+  const [language, setLanguage] = useState(storedLanguage)
 
   useEffect(() => {
     monaco.editor.defineTheme('one-dark', {
@@ -39,8 +42,54 @@ const Playground = () => {
     monaco.editor.setTheme('one-dark')
   }, [])
 
-  const handleRunCode = () => {
-    setOutput(`Output:\n${code}\nInput:\n${input}`)
+  const handleRunCode = async () => {
+    setOutput('Running...')
+
+    const requestBody = {
+      clientId: 'f20ac288b8c74e8ca64627ab90d4a2d5',
+      clientSecret:
+        '217da182de1be8a3e827cfa408957a7dae9e226d33a9d9d5d257d1dafa624d78',
+      script: code,
+      language: language,
+      versionIndex: '3',
+      stdin: input,
+    }
+
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/compile`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(requestBody),
+        },
+      )
+
+      console.log('Response:', response)
+
+      if (!response.ok) {
+        const error = await response.text()
+        throw new Error(error || 'An error occurred')
+      }
+
+      const result = await response.json()
+
+      if (result.error) {
+        setOutput(`Error: ${result.error}`)
+      } else {
+        setOutput(
+          `Output:\n${result.output}\nMemory: ${result.memory} KB\nCPU Time: ${result.cpuTime} s`,
+        )
+      }
+    } catch (error) {
+      console.log('Error:', error)
+      setOutput(`Error: ${error.message}`)
+    }
+
+    localStorage.setItem('code', code)
+    localStorage.setItem('language', language)
   }
 
   return (

@@ -9,9 +9,8 @@ const LanguageSelector = ({ language, setLanguage }) => {
         value={language}
         onChange={e => setLanguage(e.target.value)}
       >
-        <option value='javascript'>JavaScript</option>
-        <option value='typescript'>TypeScript</option>
-        <option value='python'>Python</option>
+        <option value='nodejs'>JavaScript</option>
+        <option value='python3'>Python</option>
         <option value='java'>Java</option>
         <option value='csharp'>C#</option>
         <option value='cpp'>C++</option>
