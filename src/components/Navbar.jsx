@@ -28,7 +28,7 @@ const Navbar = () => {
           <Button color='inherit' href='/'>
             Home
           </Button>
-          <Button color='inherit' href='/code-editor'>
+          <Button color='inherit' href='/codeeditor'>
             Code Editor
           </Button>
         </Box>
