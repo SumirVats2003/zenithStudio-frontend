@@ -22,8 +22,7 @@ const Home = () => {
           <FeatureCard
             title='Coding Arena'
             description='Practice your coding skills by solving various problems and challenges.'
-            link='#'
-            disabled
+            link='/arena'
           />
           <FeatureCard
             title='Coding Battleground'
