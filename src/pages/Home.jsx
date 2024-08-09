@@ -71,9 +71,9 @@ const Home = () => {
               transition={{ duration: 0.4, delay: 0.4 }}
             >
               <FeatureCard
-                title='Code Playground'
+                title='Coding Playground'
                 description='Play with code, run it with custom inputs, and see the results in real-time.'
-                link='/editor'
+                link='/playground'
               />
             </motion.div>
           </Grid>

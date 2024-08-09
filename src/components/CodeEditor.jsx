@@ -12,6 +12,7 @@ import {
   FormControl,
 } from '@mui/material'
 import * as monaco from 'monaco-editor'
+import { ResizableBox } from 'react-resizable'
 import Navbar from './Navbar'
 
 const CodeEditor = () => {
@@ -62,70 +63,101 @@ const CodeEditor = () => {
   return (
     <>
       <Navbar />
-      <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
-        <Paper elevation={3} sx={{ p: 2, mb: 2 }}>
-          <FormControl fullWidth sx={{ mb: 2 }}>
-            <InputLabel>Language</InputLabel>
-            <Select
-              value={language}
-              onChange={e => setLanguage(e.target.value)}
-              label='Language'
-            >
-              <MenuItem value='javascript'>JavaScript</MenuItem>
-              <MenuItem value='typescript'>TypeScript</MenuItem>
-              <MenuItem value='python'>Python</MenuItem>
-              <MenuItem value='java'>Java</MenuItem>
-              <MenuItem value='csharp'>C#</MenuItem>
-              <MenuItem value='cpp'>C++</MenuItem>
-              <MenuItem value='go'>Go</MenuItem>
-              <MenuItem value='ruby'>Ruby</MenuItem>
-              <MenuItem value='php'>PHP</MenuItem>
-            </Select>
-          </FormControl>
-          <MonacoEditor
-            width='100%'
-            height='400px'
-            language={language}
-            value={code}
-            options={editorOptions}
-            onChange={newCode => setCode(newCode)}
-          />
-        </Paper>
-        <Box sx={{ display: 'flex', mb: 2 }}>
-          <TextField
-            label='Input'
-            multiline
-            rows={4}
-            variant='outlined'
-            fullWidth
-            value={input}
-            onChange={e => setInput(e.target.value)}
-            sx={{ mr: 2 }}
-            InputProps={{
-              sx: {
-                backgroundColor: '#2c313c',
-                color: '#ffffff',
-                fontFamily: 'JetBrains Mono, monospace',
-              },
-            }}
-          />
-          <Button variant='contained' color='primary' onClick={handleRunCode}>
-            Run Code
-          </Button>
+      <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'row', p: 2 }}>
+        <Box sx={{ flex: 1, pr: 2 }} style={{ height: '90vh' }}>
+          <Paper elevation={3} sx={{ p: 2, height: '100%' }}>
+            <FormControl fullWidth sx={{ mb: 2 }}>
+              <InputLabel>Language</InputLabel>
+              <Select
+                value={language}
+                onChange={e => setLanguage(e.target.value)}
+                label='Language'
+              >
+                <MenuItem value='javascript'>JavaScript</MenuItem>
+                <MenuItem value='typescript'>TypeScript</MenuItem>
+                <MenuItem value='python'>Python</MenuItem>
+                <MenuItem value='java'>Java</MenuItem>
+                <MenuItem value='csharp'>C#</MenuItem>
+                <MenuItem value='cpp'>C++</MenuItem>
+                <MenuItem value='go'>Go</MenuItem>
+                <MenuItem value='ruby'>Ruby</MenuItem>
+                <MenuItem value='php'>PHP</MenuItem>
+              </Select>
+            </FormControl>
+            <MonacoEditor
+              width='100%'
+              height='90%'
+              language={language}
+              value={code}
+              options={editorOptions}
+              onChange={newCode => setCode(newCode)}
+            />
+          </Paper>
         </Box>
-        <Paper elevation={3} sx={{ p: 2 }}>
-          <Typography variant='h6' color='primary'>
-            Output:
-          </Typography>
-          <pre
-            style={{
-              color: '#abb2bf',
-              fontFamily: 'JetBrains Mono, monospace',
-            }}
+
+        {/* Right Column - Input and Output */}
+        <Box sx={{ flex: 1, pl: 2, display: 'flex', flexDirection: 'column' }}>
+          <ResizableBox
+            width={Infinity}
+            height={200}
+            minConstraints={[Infinity, 100]}
+            maxConstraints={[Infinity, 400]}
+            axis='y'
+            handle={<span className='react-resizable-handle' />}
+            style={{ marginBottom: '16px' }}
           >
-            {output}
-          </pre>
-        </Paper>
+            <Paper elevation={3} sx={{ p: 2, height: '100%' }}>
+              <TextField
+                label='Input'
+                multiline
+                rows={4}
+                variant='outlined'
+                fullWidth
+                value={input}
+                onChange={e => setInput(e.target.value)}
+                sx={{ mb: 2 }}
+                InputProps={{
+                  sx: {
+                    backgroundColor: '#2c313c',
+                    color: '#ffffff',
+                    fontFamily: 'JetBrains Mono, monospace',
+                  },
+                }}
+              />
+              <Button
+                variant='contained'
+                color='primary'
+                onClick={handleRunCode}
+              >
+                Run Code
+              </Button>
+            </Paper>
+          </ResizableBox>
+          <ResizableBox
+            width={Infinity}
+            height={300}
+            minConstraints={[Infinity, 100]}
+            maxConstraints={[Infinity, 500]}
+            axis='y'
+            handle={<span className='react-resizable-handle' />}
+            style={{ marginBottom: '16px' }}
+          >
+            <Paper elevation={3} sx={{ p: 2, height: '100%' }}>
+              <Typography variant='h6' color='primary'>
+                Output:
+              </Typography>
+              <pre
+                style={{
+                  color: '#abb2bf',
+                  fontFamily: 'JetBrains Mono, monospace',
+                  whiteSpace: 'pre-wrap',
+                }}
+              >
+                {output}
+              </pre>
+            </Paper>
+          </ResizableBox>
+        </Box>
       </Box>
     </>
   )
