@@ -58,6 +58,7 @@ const CodeEditor = () => {
     fontFamily: 'JetBrains Mono, monospace',
     fontSize: 16,
     fontLigatures: true,
+    wordWrap: true,
   }
 
   return (
