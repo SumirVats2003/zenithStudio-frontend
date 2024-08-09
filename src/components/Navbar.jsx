@@ -1,36 +1,47 @@
 import React from 'react'
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  Button,
-  IconButton,
-  Box,
-} from '@mui/material'
-import MenuIcon from '@mui/icons-material/Menu'
+import { AppBar, Toolbar, Typography, Link, Box } from '@mui/material'
+import Logo from '../assets/zblack.png'
 
 const Navbar = () => {
   return (
     <AppBar position='static' color='transparent' elevation={0}>
       <Toolbar>
-        <IconButton
-          edge='start'
-          color='inherit'
-          aria-label='menu'
-          sx={{ mr: 2 }}
-        >
-          <MenuIcon />
-        </IconButton>
+        <Box
+          component='img'
+          src={Logo}
+          alt='Zenith Studio Logo'
+          sx={{ width: 50, height: 50, mr: 2 }}
+        />
         <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
           Zenith Studio
         </Typography>
         <Box sx={{ display: 'flex', gap: 2 }}>
-          <Button color='inherit' href='/'>
+          <Link
+            href='/'
+            color='inherit'
+            underline='none'
+            sx={{
+              '&:hover': {
+                color: theme => theme.palette.primary.main,
+                textDecoration: 'underline',
+              },
+            }}
+          >
             Home
-          </Button>
-          <Button color='inherit' href='/codeeditor'>
-            Code Editor
-          </Button>
+          </Link>
+          <Link
+            href='/editor'
+            color='inherit'
+            underline='none'
+            sx={{
+              '&:hover': {
+                color: theme => theme.palette.primary.main,
+                textDecoration: 'underline',
+              },
+            }}
+          >
+            Editor
+          </Link>
         </Box>
       </Toolbar>
     </AppBar>

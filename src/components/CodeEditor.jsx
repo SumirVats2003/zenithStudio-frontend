@@ -12,6 +12,7 @@ import {
   FormControl,
 } from '@mui/material'
 import * as monaco from 'monaco-editor'
+import Navbar from './Navbar'
 
 const CodeEditor = () => {
   const [code, setCode] = useState('// Start coding here...')
@@ -47,82 +48,86 @@ const CodeEditor = () => {
   }, [])
 
   const handleRunCode = () => {
-    // Simulate code execution
     setOutput(`Output:\n${code}\nInput:\n${input}`)
   }
 
   const editorOptions = {
     selectOnLineNumbers: true,
     theme: 'one-dark',
-    fontFamily: 'JetBrains Mono, monospace', // Apply JetBrains Mono font
-    fontSize: 14, // Optional: Set the default font size
-    fontLigatures: true, // Enable ligatures
+    fontFamily: 'JetBrains Mono, monospace',
+    fontSize: 16,
+    fontLigatures: true,
   }
 
   return (
-    <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
-      <Paper elevation={3} sx={{ p: 2, mb: 2 }}>
-        <FormControl fullWidth sx={{ mb: 2 }}>
-          <InputLabel>Language</InputLabel>
-          <Select
-            value={language}
-            onChange={e => setLanguage(e.target.value)}
-            label='Language'
-          >
-            <MenuItem value='javascript'>JavaScript</MenuItem>
-            <MenuItem value='typescript'>TypeScript</MenuItem>
-            <MenuItem value='python'>Python</MenuItem>
-            <MenuItem value='java'>Java</MenuItem>
-            <MenuItem value='csharp'>C#</MenuItem>
-            <MenuItem value='cpp'>C++</MenuItem>
-            <MenuItem value='go'>Go</MenuItem>
-            <MenuItem value='ruby'>Ruby</MenuItem>
-            <MenuItem value='php'>PHP</MenuItem>
-            {/* Add more languages as needed */}
-          </Select>
-        </FormControl>
-        <MonacoEditor
-          width='100%'
-          height='400px'
-          language={language}
-          value={code}
-          options={editorOptions}
-          onChange={newCode => setCode(newCode)}
-        />
-      </Paper>
-      <Box sx={{ display: 'flex', mb: 2 }}>
-        <TextField
-          label='Input'
-          multiline
-          rows={4}
-          variant='outlined'
-          fullWidth
-          value={input}
-          onChange={e => setInput(e.target.value)}
-          sx={{ mr: 2 }}
-          InputProps={{
-            sx: {
-              backgroundColor: '#2c313c',
-              color: '#ffffff',
+    <>
+      <Navbar />
+      <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
+        <Paper elevation={3} sx={{ p: 2, mb: 2 }}>
+          <FormControl fullWidth sx={{ mb: 2 }}>
+            <InputLabel>Language</InputLabel>
+            <Select
+              value={language}
+              onChange={e => setLanguage(e.target.value)}
+              label='Language'
+            >
+              <MenuItem value='javascript'>JavaScript</MenuItem>
+              <MenuItem value='typescript'>TypeScript</MenuItem>
+              <MenuItem value='python'>Python</MenuItem>
+              <MenuItem value='java'>Java</MenuItem>
+              <MenuItem value='csharp'>C#</MenuItem>
+              <MenuItem value='cpp'>C++</MenuItem>
+              <MenuItem value='go'>Go</MenuItem>
+              <MenuItem value='ruby'>Ruby</MenuItem>
+              <MenuItem value='php'>PHP</MenuItem>
+            </Select>
+          </FormControl>
+          <MonacoEditor
+            width='100%'
+            height='400px'
+            language={language}
+            value={code}
+            options={editorOptions}
+            onChange={newCode => setCode(newCode)}
+          />
+        </Paper>
+        <Box sx={{ display: 'flex', mb: 2 }}>
+          <TextField
+            label='Input'
+            multiline
+            rows={4}
+            variant='outlined'
+            fullWidth
+            value={input}
+            onChange={e => setInput(e.target.value)}
+            sx={{ mr: 2 }}
+            InputProps={{
+              sx: {
+                backgroundColor: '#2c313c',
+                color: '#ffffff',
+                fontFamily: 'JetBrains Mono, monospace',
+              },
+            }}
+          />
+          <Button variant='contained' color='primary' onClick={handleRunCode}>
+            Run Code
+          </Button>
+        </Box>
+        <Paper elevation={3} sx={{ p: 2 }}>
+          <Typography variant='h6' color='primary'>
+            Output:
+          </Typography>
+          <pre
+            style={{
+              color: '#abb2bf',
               fontFamily: 'JetBrains Mono, monospace',
-            },
-          }}
-        />
-        <Button variant='contained' color='primary' onClick={handleRunCode}>
-          Run Code
-        </Button>
+            }}
+          >
+            {output}
+          </pre>
+        </Paper>
       </Box>
-      <Paper elevation={3} sx={{ p: 2 }}>
-        <Typography variant='h6' color='primary'>
-          Output:
-        </Typography>
-        <pre
-          style={{ color: '#abb2bf', fontFamily: 'JetBrains Mono, monospace' }}
-        >
-          {output}
-        </pre>
-      </Paper>
-    </Box>
+    </>
   )
 }
 

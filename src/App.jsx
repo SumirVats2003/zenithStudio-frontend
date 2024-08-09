@@ -8,7 +8,7 @@ const App = () => {
     <Router>
       <Routes>
         <Route path='/' element={<LandingSection />} />
-        <Route path='/codeeditor' element={<CodeEditor />} />
+        <Route path='/editor' element={<CodeEditor />} />
       </Routes>
     </Router>
   )

@@ -8,7 +8,7 @@ const theme = createTheme({
   palette: {
     mode: 'dark',
     primary: {
-      main: '#80cbc4',
+      main: '#528bff',
     },
     secondary: {
       main: '#ffab91',
@@ -36,10 +36,10 @@ const theme = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
-          background: 'linear-gradient(145deg, #80cbc4, #4db6ac)',
+          background: 'linear-gradient(145deg, #528bff, #4677db)',
           color: '#000000',
           '&:hover': {
-            background: 'linear-gradient(145deg, #4db6ac, #80cbc4)',
+            background: 'linear-gradient(145deg, #4677db, #528bff)',
           },
         },
       },

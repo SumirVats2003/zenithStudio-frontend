@@ -89,7 +89,7 @@ const LandingSection = () => {
             animation: `${slideIn} 1s ease-out`,
           }}
           onClick={() => {
-            window.location.href = '/codeeditor'
+            window.location.href = '/editor'
           }}
         >
           Get Started
