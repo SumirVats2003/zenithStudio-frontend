@@ -7,13 +7,20 @@ import './Playground.css'
 import Navbar from '../components/Navbar'
 
 const Playground = () => {
+  // Initialize state from local storage or default values
   const storedCode = localStorage.getItem('code') || '// Start coding here...'
   const storedLanguage = localStorage.getItem('language') || 'javascript'
+  const storedFontSize = parseInt(localStorage.getItem('fontSize'), 10) || 14
+  const storedWordWrap = JSON.parse(localStorage.getItem('wordWrap')) || true
+  const storedTheme = localStorage.getItem('theme') || 'one-dark'
 
   const [code, setCode] = useState(storedCode)
   const [output, setOutput] = useState('')
   const [input, setInput] = useState('')
   const [language, setLanguage] = useState(storedLanguage)
+  const [fontSize, setFontSize] = useState(storedFontSize)
+  const [wordWrap, setWordWrap] = useState(storedWordWrap)
+  const [theme, setTheme] = useState(storedTheme)
 
   useEffect(() => {
     monaco.editor.defineTheme('one-dark', {
@@ -39,8 +46,41 @@ const Playground = () => {
       },
     })
 
-    monaco.editor.setTheme('one-dark')
-  }, [])
+    monaco.editor.defineTheme('vs-dark', {
+      base: 'vs-dark',
+      inherit: true,
+      rules: [],
+      colors: {},
+    })
+
+    monaco.editor.defineTheme('light', {
+      base: 'vs',
+      inherit: true,
+      rules: [],
+      colors: {},
+    })
+
+    monaco.editor.setTheme(theme)
+  }, [theme])
+
+  useEffect(() => {
+    const editorInstance = monaco.editor.create(
+      document.getElementById('editor-container'),
+      {
+        value: code,
+        language: language,
+        theme: theme,
+        fontSize: fontSize,
+        wordWrap: wordWrap ? 'on' : 'off',
+      },
+    )
+
+    editorInstance.onDidChangeModelContent(() => {
+      setCode(editorInstance.getValue())
+    })
+
+    return () => editorInstance.dispose()
+  }, [language, fontSize, wordWrap, theme])
 
   const handleRunCode = async () => {
     setOutput('Running...')
@@ -67,15 +107,7 @@ const Playground = () => {
         },
       )
 
-      console.log('Response:', response)
-
-      if (!response.ok) {
-        const error = await response.text()
-        throw new Error(error || 'An error occurred')
-      }
-
       const result = await response.json()
-
       if (result.error) {
         setOutput(`Error: ${result.error}`)
       } else {
@@ -84,12 +116,15 @@ const Playground = () => {
         )
       }
     } catch (error) {
-      console.log('Error:', error)
       setOutput(`Error: ${error.message}`)
     }
 
+    // Save state to local storage
     localStorage.setItem('code', code)
     localStorage.setItem('language', language)
+    localStorage.setItem('fontSize', fontSize)
+    localStorage.setItem('wordWrap', JSON.stringify(wordWrap))
+    localStorage.setItem('theme', theme)
   }
 
   return (
@@ -97,13 +132,17 @@ const Playground = () => {
       <Navbar />
       <div className='playground-container'>
         <div className='left-column'>
-          <LanguageSelector language={language} setLanguage={setLanguage} />
-          <Editor
+          <LanguageSelector
             language={language}
-            code={code}
-            setCode={setCode}
-            className='editor-container'
+            setLanguage={setLanguage}
+            fontSize={fontSize}
+            setFontSize={setFontSize}
+            wordWrap={wordWrap}
+            setWordWrap={setWordWrap}
+            theme={theme}
+            setTheme={setTheme}
           />
+          <div id='editor-container' className='editor-container'></div>
         </div>
         <div className='right-column'>
           <InputOutputPanel
