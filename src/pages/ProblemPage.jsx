@@ -10,8 +10,15 @@ const ProblemPage = () => {
   const { problemId } = useParams()
   const [problem, setProblem] = useState(null)
 
-  const storedCode = localStorage.getItem('code') || ''
-  const storedLanguage = localStorage.getItem('language') || 'javascript'
+  const templateCode = `public class Test {
+    public static void main(String[] args) {
+        // write your code here
+        System.out.println("Hello world");
+    }
+}\n`
+
+  const storedCode = localStorage.getItem('code') || templateCode
+  // const storedLanguage = localStorage.getItem('language') || 'javascript'
   const storedFontSize = parseInt(localStorage.getItem('fontSize'), 10) || 14
   const storedWordWrap = JSON.parse(localStorage.getItem('wordWrap')) || true
   const storedTheme = localStorage.getItem('theme') || 'one-dark'
@@ -19,7 +26,7 @@ const ProblemPage = () => {
   const [code, setCode] = useState(storedCode)
   const [output, setOutput] = useState('')
   const [input, setInput] = useState('')
-  const [language, setLanguage] = useState(storedLanguage)
+  // const [language, setLanguage] = useState(storedLanguage)
   const [fontSize, setFontSize] = useState(storedFontSize)
   const [wordWrap, setWordWrap] = useState(storedWordWrap)
   const [theme, setTheme] = useState(storedTheme)
@@ -87,7 +94,7 @@ const ProblemPage = () => {
       document.getElementById('editor-container'),
       {
         value: code,
-        language: language,
+        language: 'java',
         theme: theme,
         fontSize: fontSize,
         wordWrap: wordWrap ? 'on' : 'off',
@@ -99,38 +106,24 @@ const ProblemPage = () => {
     })
 
     localStorage.setItem('code', code)
-    localStorage.setItem('language', language)
+    // localStorage.setItem('language', language)
     localStorage.setItem('fontSize', fontSize)
     localStorage.setItem('wordWrap', JSON.stringify(wordWrap))
 
     return () => editorInstance.dispose()
-  }, [language, fontSize, wordWrap, theme])
+  }, [fontSize, wordWrap, theme])
 
   const handleRunCode = async () => {
     setOutput('Running...')
 
-    let modLang
-    if (language == 'javascript') {
-      modLang = 'nodejs'
-    }
-    if (language == 'python') {
-      modLang = 'python3'
-    } else {
-      modLang = language
-    }
-
     const requestBody = {
-      clientId: import.meta.env.VITE_CLIENT_ID,
-      clientSecret: import.meta.env.VITE_CLIENT_SECRET,
-      script: code,
-      language: modLang,
-      versionIndex: '3',
-      stdin: input,
+      code: code,
+      input: input,
     }
 
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/compile`,
+        `${import.meta.env.VITE_API_URL}/api/execute`,
         {
           method: 'POST',
           headers: {
@@ -145,7 +138,7 @@ const ProblemPage = () => {
         setOutput(`Error: ${result.error}`)
       } else {
         setOutput(
-          `Output:\n${result.output}\nMemory: ${result.memory} KB\nCPU Time: ${result.cpuTime} s`,
+          `Output:\n${result.output}\nMemory: ${result.memoryUsage} KB\nExecution Time: ${result.executionTime} s`,
         )
       }
     } catch (error) {
@@ -179,8 +172,8 @@ const ProblemPage = () => {
         </div>
         <div className='problem-editor-container'>
           <LanguageSelector
-            language={language}
-            setLanguage={setLanguage}
+            // language={language}
+            // setLanguage={setLanguage}
             fontSize={fontSize}
             setFontSize={setFontSize}
             wordWrap={wordWrap}
