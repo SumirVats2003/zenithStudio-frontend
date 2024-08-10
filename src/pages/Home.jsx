@@ -28,7 +28,6 @@ const Home = () => {
             title='Coding Battleground'
             description='Compete in ongoing contests, view leaderboards, and host your own contests.'
             link='#'
-            disabled
           />
         </div>
       </div>
