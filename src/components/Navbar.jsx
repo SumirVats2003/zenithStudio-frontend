@@ -3,13 +3,14 @@ import { Link, useNavigate } from 'react-router-dom'
 import './Navbar.css'
 import Logo from '../assets/zblack.png'
 
-const Navbar = ({ pgvisible, arvisible, bgvisible, isAuthenticated }) => {
+const Navbar = ({ pgvisible, arvisible, bgvisible }) => {
   const navigate = useNavigate()
+  const isAuthenticated = localStorage.getItem('authToken') ? true : false
 
   const handleLogout = () => {
     // Clear authentication state (e.g., remove tokens or user data)
     // Redirect to the login page or home page
-    // Example: localStorage.removeItem('authToken');
+    localStorage.removeItem('authToken')
     navigate('/login')
   }
 

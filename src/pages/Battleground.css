@@ -1,0 +1,66 @@
+.battleground-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.battleground-description {
+  margin-bottom: 20px;
+}
+
+.battleground-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.create-contest-btn,
+.view-leaderboard-btn,
+.join-contest-btn {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  background-color: green;
+  color: white;
+  border-radius: 5px;
+}
+
+.create-contest-btn:hover,
+.view-leaderboard-btn:hover,
+.join-contest-btn:hover {
+  background-color: darkgreen;
+}
+
+.ongoing-contests {
+  margin-top: 40px;
+}
+
+.contest-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.contest-card {
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.contest-card h3 {
+  margin-bottom: 10px;
+}
+
+.contest-card p {
+  margin-bottom: 15px;
+}
+
+.join-contest-btn {
+  background-color: #61afef;
+}
+
+.join-contest-btn:hover {
+  background-color: #0056b3;
+}

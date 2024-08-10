@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Navbar from '../components/Navbar'
+import { Link } from 'react-router-dom'
 import './Auth.css'
 
 const LoginPage = ({ setIsAuthenticated }) => {
@@ -40,7 +41,7 @@ const LoginPage = ({ setIsAuthenticated }) => {
         setIsAuthenticated(true)
 
         // Optionally, store authentication data (like tokens) in local storage
-        // localStorage.setItem('authToken', data.token);
+        localStorage.setItem('authToken', data.username)
 
         navigate('/home') // Redirect to the home page or another protected page
       } else {
@@ -79,6 +80,9 @@ const LoginPage = ({ setIsAuthenticated }) => {
             />
           </label>
           <button type='submit'>Login</button>
+          <p>
+            New User? <Link to='/register'>Register</Link>
+          </p>
         </form>
       </div>
     </>
