@@ -85,7 +85,7 @@ const UploadPage = () => {
 
   return (
     <>
-      <Navbar pgvisible={true} arvisible={false} bgvisible={true} />
+      <Navbar pgvisible={true} arvisible={true} bgvisible={true} />
       <div className='upload-page-container'>
         <div className='left-section'>
           <h1>Upload New Problem</h1>
