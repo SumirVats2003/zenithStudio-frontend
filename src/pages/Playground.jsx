@@ -119,7 +119,7 @@ const Playground = () => {
         setOutput(`Error: ${result.error}`)
       } else {
         setOutput(
-          `Output:\n${result.output}\nMemory: ${result.memoryUsage} KB\nExecution Time: ${result.executionTime} s`,
+          `Output:\n${result.output}\nMemory: ${result.memoryUsage} KB\nExecution Time: ${result.executionTime}ms`,
         )
       }
     } catch (error) {
