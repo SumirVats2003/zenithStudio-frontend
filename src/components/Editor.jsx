@@ -15,7 +15,6 @@ const Editor = ({ language, code, setCode }) => {
     <div className='editor-container'>
       <MonacoEditor
         width='100%'
-        height='100%'
         language={language}
         value={code}
         options={editorOptions}

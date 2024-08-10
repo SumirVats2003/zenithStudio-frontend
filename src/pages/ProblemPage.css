@@ -1,14 +1,39 @@
-.problem-details-page {
+.problem-page-container {
   display: flex;
+  flex-direction: row;
+  gap: 20px;
   padding: 20px;
-  height: 100vh;
+  height: 90vh;
 }
 
-.problem-content {
-  width: 50%;
-  padding-right: 20px;
+.problem-description {
+  flex: 1;
+  padding: 20px;
+  border-right: 1px solid #444;
+  font-family: 'Jetbrains Mono', monospace;
 }
 
-.editor-section {
-  width: 50%;
+.problem-description h1 {
+  color: #c678dd;
+}
+
+.problem-description h2 {
+  color: #61afef;
+}
+
+.problem-description p {
+  text-align: left;
+  margin: 10px 0;
+}
+
+.problem-editor-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.editor-container {
+  height: 100%;
+  margin-bottom: 20px;
 }
