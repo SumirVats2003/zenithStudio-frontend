@@ -29,7 +29,7 @@ const LanguageSelector = ({
 
   return (
     <div className='language-selector'>
-      <div className='settings-group'>
+      {/* <div className='settings-group'>
         <label htmlFor='language'>Language</label>
         <select id='language' value={language} onChange={handleLanguageChange}>
           <option value='javascript'>JavaScript</option>
@@ -40,8 +40,8 @@ const LanguageSelector = ({
           <option value='go'>Go</option>
           <option value='ruby'>Ruby</option>
           <option value='php'>PHP</option>
-        </select>
-      </div>
+        </select> 
+      </div> */}
 
       <div className='settings-group'>
         <label htmlFor='font-size'>Font</label>
