@@ -7,7 +7,7 @@ import './Playground.css'
 import Navbar from '../components/Navbar'
 
 const Playground = () => {
-  const storedCode = localStorage.getItem('code') || '// Start coding here...'
+  const storedCode = localStorage.getItem('code') || ''
   const storedLanguage = localStorage.getItem('language') || 'javascript'
   const storedFontSize = parseInt(localStorage.getItem('fontSize'), 10) || 14
   const storedWordWrap = JSON.parse(localStorage.getItem('wordWrap')) || true
@@ -60,6 +60,7 @@ const Playground = () => {
     })
 
     monaco.editor.setTheme(theme)
+    localStorage.setItem('theme', theme)
   }, [theme])
 
   useEffect(() => {
@@ -77,6 +78,11 @@ const Playground = () => {
     editorInstance.onDidChangeModelContent(() => {
       setCode(editorInstance.getValue())
     })
+
+    localStorage.setItem('code', code)
+    localStorage.setItem('language', language)
+    localStorage.setItem('fontSize', fontSize)
+    localStorage.setItem('wordWrap', JSON.stringify(wordWrap))
 
     return () => editorInstance.dispose()
   }, [language, fontSize, wordWrap, theme])
@@ -126,12 +132,6 @@ const Playground = () => {
     } catch (error) {
       setOutput(`Error: ${error.message}`)
     }
-
-    localStorage.setItem('code', code)
-    localStorage.setItem('language', language)
-    localStorage.setItem('fontSize', fontSize)
-    localStorage.setItem('wordWrap', JSON.stringify(wordWrap))
-    localStorage.setItem('theme', theme)
   }
 
   return (

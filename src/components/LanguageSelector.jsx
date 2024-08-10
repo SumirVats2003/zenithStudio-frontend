@@ -67,8 +67,8 @@ const LanguageSelector = ({
         <label htmlFor='theme'>Theme</label>
         <select id='theme' value={theme} onChange={handleThemeChange}>
           <option value='one-dark'>One Dark</option>
-          <option value='vs-dark'>VS Dark</option>
-          <option value='light'>Light</option>
+          <option value='vs-dark'>Visual Studio Dark</option>
+          <option value='light'>Visual Studio Light</option>
         </select>
       </div>
     </div>
