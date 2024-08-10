@@ -74,3 +74,8 @@
     opacity: 1;
   }
 }
+
+.error {
+  color: #ff0008;
+  text-align: center;
+}

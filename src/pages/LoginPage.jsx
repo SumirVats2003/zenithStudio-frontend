@@ -1,13 +1,15 @@
 import React, { useState } from 'react'
-import './Auth.css'
+import { useNavigate } from 'react-router-dom'
 import Navbar from '../components/Navbar'
-import { Link } from 'react-router-dom'
+import './Auth.css'
 
-const LoginPage = () => {
+const LoginPage = ({ setIsAuthenticated }) => {
   const [formData, setFormData] = useState({
-    email: '',
+    username: '',
     password: '',
   })
+
+  const navigate = useNavigate()
 
   const handleChange = e => {
     const { name, value } = e.target
@@ -19,8 +21,35 @@ const LoginPage = () => {
 
   const handleSubmit = async e => {
     e.preventDefault()
-    // You can add your authentication logic here, such as calling an API.
-    console.log('Login data:', formData)
+
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/users/login`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        },
+      )
+      const data = await response.json()
+
+      if (data.success) {
+        // Set authentication state to true
+        setIsAuthenticated(true)
+
+        // Optionally, store authentication data (like tokens) in local storage
+        // localStorage.setItem('authToken', data.token);
+
+        navigate('/home') // Redirect to the home page or another protected page
+      } else {
+        alert('Login failed. Please check your username and password.')
+      }
+    } catch (error) {
+      console.error('Error logging in:', error)
+      alert('An error occurred during login.')
+    }
   }
 
   return (
@@ -30,11 +59,11 @@ const LoginPage = () => {
         <h1>Login</h1>
         <form onSubmit={handleSubmit}>
           <label>
-            Email:
+            Username:
             <input
-              type='email'
-              name='email'
-              value={formData.email}
+              type='text'
+              name='username'
+              value={formData.username}
               onChange={handleChange}
               required
             />
@@ -50,9 +79,6 @@ const LoginPage = () => {
             />
           </label>
           <button type='submit'>Login</button>
-          <p>
-            New User? <Link to='/register'>Register</Link>
-          </p>
         </form>
       </div>
     </>

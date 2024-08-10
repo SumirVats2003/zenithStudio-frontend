@@ -1,9 +1,18 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import './Navbar.css'
 import Logo from '../assets/zblack.png'
 
 const Navbar = ({ pgvisible, arvisible, bgvisible, isAuthenticated }) => {
+  const navigate = useNavigate()
+
+  const handleLogout = () => {
+    // Clear authentication state (e.g., remove tokens or user data)
+    // Redirect to the login page or home page
+    // Example: localStorage.removeItem('authToken');
+    navigate('/login')
+  }
+
   return (
     <div className='navbar'>
       <Link to='/home' className='navbar-logo'>
@@ -11,29 +20,25 @@ const Navbar = ({ pgvisible, arvisible, bgvisible, isAuthenticated }) => {
         <div className='navbar-title'>Zenith Studio</div>
       </Link>
       <div className='navbar-links'>
-        {pgvisible ? (
+        {pgvisible && (
           <Link to='/playground' className='nav-link'>
             Playground
           </Link>
-        ) : (
-          ''
         )}
-        {arvisible ? (
+        {arvisible && (
           <Link to='/arena' className='nav-link'>
             Arena
           </Link>
-        ) : (
-          ''
         )}
-        {bgvisible ? (
+        {bgvisible && (
           <Link to='/battleground' className='nav-link'>
             Battleground
           </Link>
-        ) : (
-          ''
         )}
         {isAuthenticated ? (
-          ''
+          <button onClick={handleLogout} className='nav-link'>
+            Logout
+          </button>
         ) : (
           <Link to='/login' className='nav-link'>
             Login

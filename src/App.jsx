@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import LandingSection from './pages/LandingSection'
 import HomePage from './pages/Home'
@@ -10,6 +10,8 @@ import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
 
 const App = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+
   return (
     <Router>
       <Routes>
@@ -19,7 +21,10 @@ const App = () => {
         <Route path='/arena' element={<Arena />} />
         <Route path='/problems/:problemId' element={<ProblemPage />} />
         <Route path='/upload' element={<UploadPage />} />
-        <Route path='/login' element={<LoginPage />} />
+        <Route
+          path='/login'
+          element={<LoginPage setIsAuthenticated={setIsAuthenticated} />}
+        />
         <Route path='/register' element={<RegisterPage />} />
       </Routes>
     </Router>

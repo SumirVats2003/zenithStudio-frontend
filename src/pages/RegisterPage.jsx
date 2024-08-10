@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Navbar from '../components/Navbar'
 import './Auth.css'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const RegisterPage = () => {
   const [formData, setFormData] = useState({
@@ -9,6 +9,9 @@ const RegisterPage = () => {
     email: '',
     password: '',
   })
+
+  const [error, setError] = useState('')
+  const navigate = useNavigate()
 
   const handleChange = e => {
     const { name, value } = e.target
@@ -20,8 +23,30 @@ const RegisterPage = () => {
 
   const handleSubmit = async e => {
     e.preventDefault()
-    // You can add your registration logic here, such as calling an API.
-    console.log('Registration data:', formData)
+    setError('')
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/users/register`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        },
+      )
+
+      const result = await response.json()
+
+      if (result.success) {
+        navigate('/login')
+      } else {
+        setError('Registration failed')
+      }
+    } catch (error) {
+      console.error('Error during registration:', error)
+      setError('An error occurred during registration.')
+    }
   }
 
   return (
@@ -29,6 +54,7 @@ const RegisterPage = () => {
       <Navbar pgvisible={true} bgvisible={true} arvisible={true} />
       <div className='auth-container'>
         <h1>Register</h1>
+        {error && <p className='error'>{error}</p>}
         <form onSubmit={handleSubmit}>
           <label>
             Username:
@@ -62,7 +88,7 @@ const RegisterPage = () => {
           </label>
           <button type='submit'>Register</button>
           <p>
-            Registered? <Link to='/login'>Login</Link>
+            Already registered? <Link to='/login'>Login</Link>
           </p>
         </form>
       </div>
