@@ -1,24 +1,39 @@
 import React from 'react'
-import { AppBar, Toolbar, Typography, Link, Box } from '@mui/material'
+import { Link } from 'react-router-dom'
+import './Navbar.css'
 import Logo from '../assets/zblack.png'
 
-const Navbar = () => {
+const Navbar = ({ pgvisible, arvisible, bgvisible }) => {
   return (
-    <AppBar position='static' color='transparent' elevation={0}>
-      <Toolbar>
-        <Link href='/home'>
-          <Box
-            component='img'
-            src={Logo}
-            alt='Zenith Studio Logo'
-            sx={{ width: 50, height: 50, mr: 2 }}
-          />
-        </Link>
-        <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
-          Zenith Studio
-        </Typography>
-      </Toolbar>
-    </AppBar>
+    <div className='navbar'>
+      <Link to='/home' className='navbar-logo'>
+        <img src={Logo} alt='Zenith Studio Logo' className='logo' />
+        <div className='navbar-title'>Zenith Studio</div>
+      </Link>
+      <div className='navbar-links'>
+        {pgvisible ? (
+          <Link to='/playground' className='nav-link'>
+            Playground
+          </Link>
+        ) : (
+          ''
+        )}
+        {arvisible ? (
+          <Link to='/arena' className='nav-link'>
+            Arena
+          </Link>
+        ) : (
+          ''
+        )}
+        {bgvisible ? (
+          <Link to='/battleground' className='nav-link'>
+            Battleground
+          </Link>
+        ) : (
+          ''
+        )}
+      </div>
+    </div>
   )
 }
 

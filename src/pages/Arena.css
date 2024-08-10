@@ -1,7 +1,58 @@
 .arena-container {
+  padding: 20px;
+}
+
+.problem-table-container {
+  font-family: 'Jetbrains Mono', monospace;
+}
+
+.loading-table {
+  width: 80%;
+  border-collapse: collapse;
+  font-size: 1em;
+  color: #ffffff;
+}
+
+.loading-table th,
+.loading-table td {
+  padding: 12px 15px;
+  border: 1px solid #444;
+  text-align: left;
+}
+
+.loading-table th {
+  background-color: #1e1e1e;
+  color: #c678dd;
+}
+
+.loading-row {
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+.loading-row:nth-child(odd) {
+  background-color: #1e1e1e;
+}
+
+.loading-row:nth-child(even) {
+  background-color: #2c2c2c;
+}
+
+@keyframes pulse {
+  0% {
+    background-color: #2c2c2c;
+  }
+  50% {
+    background-color: #1e1e1e;
+  }
+  100% {
+    background-color: #2c2c2c;
+  }
+}
+
+.table-placeholder {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
-  padding: 20px;
+  height: 400px;
+  margin-top: 5rem;
 }

@@ -136,7 +136,7 @@ const Playground = () => {
 
   return (
     <>
-      <Navbar />
+      <Navbar pgvisible={false} arvisible={true} bgvisible={true} />
       <div className='playground-container'>
         <div className='left-column'>
           <LanguageSelector

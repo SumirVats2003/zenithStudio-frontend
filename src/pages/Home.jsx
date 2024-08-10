@@ -6,7 +6,7 @@ import './Home.css'
 const Home = () => {
   return (
     <div className='home-container'>
-      <Navbar />
+      <Navbar pgvisible={false} arvisible={false} bgvisible={false} />
       <div className='main-content'>
         <h1>Welcome to Zenith Studio</h1>
         <p>

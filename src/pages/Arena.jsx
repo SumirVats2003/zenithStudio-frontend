@@ -8,6 +8,7 @@ const Arena = () => {
   const [problems, setProblems] = useState([])
   const [selectedProblem, setSelectedProblem] = useState(null)
   const [currentPage, setCurrentPage] = useState(1)
+  const [loading, setLoading] = useState(true)
   const problemsPerPage = 20
 
   useEffect(() => {
@@ -18,8 +19,10 @@ const Arena = () => {
         )
         const data = await response.json()
         setProblems(data)
+        setLoading(false)
       } catch (error) {
         console.error('Error fetching problems:', error)
+        setLoading(false)
       }
     }
 
@@ -28,7 +31,6 @@ const Arena = () => {
 
   const handleProblemSelect = problem => {
     setSelectedProblem(problem)
-    // navigate to the problem details page (e.g., /problems/:id)
     window.location.href = `/problems/${problem.id}`
   }
 
@@ -45,19 +47,44 @@ const Arena = () => {
 
   return (
     <>
-      <Navbar />
+      <Navbar pgvisible={true} arvisible={false} bgvisible={true} />
       <div className='arena-container'>
         <div className='problem-table-container'>
-          <ProblemList
-            problems={currentProblems}
-            onSelect={handleProblemSelect}
-          />
-          <Pagination
-            currentPage={currentPage}
-            itemsPerPage={problemsPerPage}
-            totalItems={problems.length}
-            onPageChange={handlePageChange}
-          />
+          {loading ? (
+            <div className='table-placeholder'>
+              <table className='loading-table'>
+                <thead>
+                  <tr>
+                    <th>Title</th>
+                    <th>Difficulty</th>
+                    <th>Tags</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {[...Array(10)].map((_, index) => (
+                    <tr key={index} className='loading-row'>
+                      <td>Loading...</td>
+                      <td>Loading...</td>
+                      <td>Loading...</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <>
+              <ProblemList
+                problems={currentProblems}
+                onSelect={handleProblemSelect}
+              />
+              <Pagination
+                currentPage={currentPage}
+                itemsPerPage={problemsPerPage}
+                totalItems={problems.length}
+                onPageChange={handlePageChange}
+              />
+            </>
+          )}
         </div>
       </div>
     </>
