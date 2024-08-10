@@ -1,0 +1,13 @@
+.problem-details-container {
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.examples {
+  margin-top: 20px;
+}
+
+.examples div {
+  margin-bottom: 10px;
+}

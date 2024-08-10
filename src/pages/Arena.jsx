@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import Navbar from '../components/Navbar'
 import ProblemList from '../components/ProblemList'
-import ProblemDetails from '../components/ProblemDetails'
-import SubmitSolution from '../components/SubmitSolution'
+import Pagination from '../components/Pagination'
 import './Arena.css'
 
 const Arena = () => {
   const [problems, setProblems] = useState([])
   const [selectedProblem, setSelectedProblem] = useState(null)
-  const [submissionResult, setSubmissionResult] = useState('')
+  const [currentPage, setCurrentPage] = useState(1)
+  const problemsPerPage = 20
 
   useEffect(() => {
     const fetchProblems = async () => {
@@ -28,51 +28,36 @@ const Arena = () => {
 
   const handleProblemSelect = problem => {
     setSelectedProblem(problem)
+    // navigate to the problem details page (e.g., /problems/:id)
+    window.location.href = `/problems/${problem.id}`
   }
 
-  const handleSolutionSubmit = async solution => {
-    if (!selectedProblem) return
+  const indexOfLastProblem = currentPage * problemsPerPage
+  const indexOfFirstProblem = indexOfLastProblem - problemsPerPage
+  const currentProblems = problems.slice(
+    indexOfFirstProblem,
+    indexOfLastProblem,
+  )
 
-    const requestBody = {
-      problemId: selectedProblem.id,
-      solution: solution,
-    }
-
-    try {
-      const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/submit-solution`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(requestBody),
-        },
-      )
-
-      const result = await response.json()
-      setSubmissionResult(`Result: ${result.message}`)
-    } catch (error) {
-      console.error('Error submitting solution:', error)
-      setSubmissionResult('Error submitting solution.')
-    }
+  const handlePageChange = pageNumber => {
+    setCurrentPage(pageNumber)
   }
 
   return (
     <>
       <Navbar />
       <div className='arena-container'>
-        <div className='left-column'>
-          <ProblemList problems={problems} onSelect={handleProblemSelect} />
-        </div>
-        <div className='right-column'>
-          {selectedProblem && (
-            <>
-              <ProblemDetails problem={selectedProblem} />
-              <SubmitSolution onSubmit={handleSolutionSubmit} />
-              <div className='submission-result'>{submissionResult}</div>
-            </>
-          )}
+        <div className='problem-table-container'>
+          <ProblemList
+            problems={currentProblems}
+            onSelect={handleProblemSelect}
+          />
+          <Pagination
+            currentPage={currentPage}
+            itemsPerPage={problemsPerPage}
+            totalItems={problems.length}
+            onPageChange={handlePageChange}
+          />
         </div>
       </div>
     </>

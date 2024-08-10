@@ -1,0 +1,14 @@
+.problem-details-page {
+  display: flex;
+  padding: 20px;
+  height: 100vh;
+}
+
+.problem-content {
+  width: 50%;
+  padding-right: 20px;
+}
+
+.editor-section {
+  width: 50%;
+}

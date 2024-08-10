@@ -4,6 +4,7 @@ import LandingSection from './pages/LandingSection'
 import HomePage from './pages/Home'
 import Playground from './pages/Playground'
 import Arena from './pages/Arena'
+import ProblemPage from './pages/ProblemPage'
 
 const App = () => {
   return (
@@ -13,6 +14,7 @@ const App = () => {
         <Route path='/home' element={<HomePage />} />
         <Route path='/playground' element={<Playground />} />
         <Route path='/arena' element={<Arena />} />
+        <Route path='/problems/:problemId' element={<ProblemPage />} />
       </Routes>
     </Router>
   )

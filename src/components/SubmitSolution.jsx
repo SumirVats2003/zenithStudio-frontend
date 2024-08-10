@@ -1,22 +1,22 @@
 import React, { useState } from 'react'
+import './SubmitSolution.css'
 
 const SubmitSolution = ({ onSubmit }) => {
   const [solution, setSolution] = useState('')
 
-  const handleSubmit = e => {
-    e.preventDefault()
+  const handleSubmit = () => {
     onSubmit(solution)
   }
 
   return (
-    <form onSubmit={handleSubmit} className='submit-solution'>
+    <div className='submit-solution-container'>
       <textarea
         value={solution}
         onChange={e => setSolution(e.target.value)}
-        placeholder='Write your solution here...'
+        placeholder='Enter your solution here...'
       />
-      <button type='submit'>Submit Solution</button>
-    </form>
+      <button onClick={handleSubmit}>Submit</button>
+    </div>
   )
 }
 
