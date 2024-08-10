@@ -49,6 +49,16 @@ const UploadPage = () => {
     }))
   }
 
+  const handleAddExample = () => {
+    setFormData(prevData => ({
+      ...prevData,
+      examples: [
+        ...prevData.examples,
+        { input: '', output: '', explanation: '' },
+      ],
+    }))
+  }
+
   const handleSubmit = async e => {
     e.preventDefault()
     try {
@@ -235,6 +245,13 @@ const UploadPage = () => {
                 </label>
               </div>
             ))}
+            <button
+              type='button'
+              className='add-button'
+              onClick={handleAddExample}
+            >
+              Add Example
+            </button>
           </div>
         </div>
       </div>

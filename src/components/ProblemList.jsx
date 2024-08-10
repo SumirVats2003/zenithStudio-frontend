@@ -1,7 +1,7 @@
 import React from 'react'
 import './ProblemList.css'
 
-const ProblemList = ({ problems, onSelect }) => {
+const ProblemList = ({ problems, onSelect, onSort, sortOrder }) => {
   const getDifficultyColor = difficulty => {
     switch (difficulty) {
       case 'EASY':
@@ -21,7 +21,9 @@ const ProblemList = ({ problems, onSelect }) => {
         <thead>
           <tr>
             <th>Title</th>
-            <th>Difficulty</th>
+            <th onClick={onSort} style={{ cursor: 'pointer' }}>
+              Difficulty {sortOrder === 'asc' ? '▲' : '▼'}
+            </th>
             <th>Tags</th>
           </tr>
         </thead>

@@ -102,3 +102,18 @@
 .search-container button:hover {
   background-color: #008cff;
 }
+
+.sort-container {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.sort-container label {
+  margin-right: 10px;
+}
+
+.sort-container select {
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}

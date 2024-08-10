@@ -9,6 +9,7 @@ const Arena = () => {
   const [problems, setProblems] = useState([])
   const [currentPage, setCurrentPage] = useState(1)
   const [loading, setLoading] = useState(true)
+  const [sortOrder, setSortOrder] = useState('asc')
   const problemsPerPage = 20
 
   useEffect(() => {
@@ -35,6 +36,18 @@ const Arena = () => {
 
   const handlePageChange = pageNumber => {
     setCurrentPage(pageNumber)
+  }
+
+  const handleSort = () => {
+    const difficultyOrder = ['EASY', 'MEDIUM', 'HARD']
+    const sortedProblems = [...problems].sort((a, b) => {
+      const comparison =
+        difficultyOrder.indexOf(a.difficulty) -
+        difficultyOrder.indexOf(b.difficulty)
+      return sortOrder === 'asc' ? comparison : -comparison
+    })
+    setProblems(sortedProblems)
+    setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')
   }
 
   const handleSearchResults = searchResults => {
@@ -85,6 +98,8 @@ const Arena = () => {
                   currentPage * problemsPerPage,
                 )}
                 onSelect={handleProblemSelect}
+                onSort={handleSort}
+                sortOrder={sortOrder}
               />
               <Pagination
                 currentPage={currentPage}
