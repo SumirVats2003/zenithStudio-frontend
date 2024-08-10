@@ -6,7 +6,6 @@ import './Arena.css'
 
 const Arena = () => {
   const [problems, setProblems] = useState([])
-  const [selectedProblem, setSelectedProblem] = useState(null)
   const [currentPage, setCurrentPage] = useState(1)
   const [loading, setLoading] = useState(true)
   const problemsPerPage = 20
@@ -30,16 +29,8 @@ const Arena = () => {
   }, [])
 
   const handleProblemSelect = problem => {
-    setSelectedProblem(problem)
     window.location.href = `/problems/${problem.id}`
   }
-
-  const indexOfLastProblem = currentPage * problemsPerPage
-  const indexOfFirstProblem = indexOfLastProblem - problemsPerPage
-  const currentProblems = problems.slice(
-    indexOfFirstProblem,
-    indexOfLastProblem,
-  )
 
   const handlePageChange = pageNumber => {
     setCurrentPage(pageNumber)
@@ -49,6 +40,14 @@ const Arena = () => {
     <>
       <Navbar pgvisible={true} arvisible={false} bgvisible={true} />
       <div className='arena-container'>
+        <div className='button-container'>
+          <button
+            className='upload-button'
+            onClick={() => (window.location.href = '/upload')}
+          >
+            Upload Problem
+          </button>
+        </div>
         <div className='problem-table-container'>
           {loading ? (
             <div className='table-placeholder'>
@@ -74,7 +73,10 @@ const Arena = () => {
           ) : (
             <>
               <ProblemList
-                problems={currentProblems}
+                problems={problems.slice(
+                  (currentPage - 1) * problemsPerPage,
+                  currentPage * problemsPerPage,
+                )}
                 onSelect={handleProblemSelect}
               />
               <Pagination

@@ -41,7 +41,7 @@
 }
 
 .output-container {
-  margin-top: 20px;
+  margin-top: 1rem;
   display: flex;
   align-items: flex-start;
   flex-direction: column;

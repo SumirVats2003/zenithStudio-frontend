@@ -40,42 +40,6 @@ const ProblemPage = () => {
     fetchProblem()
   }, [problemId])
 
-  const handleRunCode = async () => {
-    const requestBody = {
-      clientId: import.meta.env.VITE_CLIENT_ID,
-      clientSecret: import.meta.env.VITE_CLIENT_SECRET,
-      script: code,
-      language: language,
-      versionIndex: '3',
-      stdin: input,
-    }
-
-    try {
-      const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/compile`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(requestBody),
-        },
-      )
-
-      const result = await response.json()
-      if (result.error) {
-        setOutput(`Error: ${result.error}`)
-      } else {
-        setOutput(
-          `Output:\n${result.output}\nMemory: ${result.memory} KB\nCPU Time: ${result.cpuTime} s`,
-        )
-      }
-    } catch (error) {
-      console.error('Error running code:', error)
-      setOutput(`Error: ${error.message}`)
-    }
-  }
-
   useEffect(() => {
     monaco.editor.defineTheme('one-dark', {
       base: 'vs-dark',
@@ -122,11 +86,11 @@ const ProblemPage = () => {
     const editorInstance = monaco.editor.create(
       document.getElementById('editor-container'),
       {
-        value: storedCode,
-        language: storedLanguage,
-        theme: storedTheme,
-        fontSize: storedFontSize,
-        wordWrap: storedWordWrap ? 'on' : 'off',
+        value: code,
+        language: language,
+        theme: theme,
+        fontSize: fontSize,
+        wordWrap: wordWrap ? 'on' : 'off',
       },
     )
 
@@ -141,6 +105,53 @@ const ProblemPage = () => {
 
     return () => editorInstance.dispose()
   }, [language, fontSize, wordWrap, theme])
+
+  const handleRunCode = async () => {
+    setOutput('Running...')
+
+    let modLang
+    if (language == 'javascript') {
+      modLang = 'nodejs'
+    }
+    if (language == 'python') {
+      modLang = 'python3'
+    } else {
+      modLang = language
+    }
+
+    const requestBody = {
+      clientId: import.meta.env.VITE_CLIENT_ID,
+      clientSecret: import.meta.env.VITE_CLIENT_SECRET,
+      script: code,
+      language: modLang,
+      versionIndex: '3',
+      stdin: input,
+    }
+
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/compile`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(requestBody),
+        },
+      )
+
+      const result = await response.json()
+      if (result.error) {
+        setOutput(`Error: ${result.error}`)
+      } else {
+        setOutput(
+          `Output:\n${result.output}\nMemory: ${result.memory} KB\nCPU Time: ${result.cpuTime} s`,
+        )
+      }
+    } catch (error) {
+      setOutput(`Error: ${error.message}`)
+    }
+  }
 
   return (
     <>
