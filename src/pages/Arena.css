@@ -1,5 +1,8 @@
 .arena-container {
   padding: 20px;
+  background-image: radial-gradient(circle, #302f2f 1px, transparent 1px);
+  background-size: 30px 30px;
+  background-position: 0 0, 15px 15px;
 }
 
 .problem-table-container {
@@ -15,18 +18,16 @@
 
 .loading-table th,
 .loading-table td {
+  animation: pulse 1.5s infinite ease-in-out;
   padding: 12px 15px;
   border: 1px solid #444;
   text-align: left;
+  background-color: #1e1e1e;
 }
 
 .loading-table th {
   background-color: #1e1e1e;
-  color: #c678dd;
-}
-
-.loading-row {
-  animation: pulse 1.5s infinite ease-in-out;
+  color: #61afef;
 }
 
 .loading-row:nth-child(odd) {

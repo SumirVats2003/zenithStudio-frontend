@@ -22,11 +22,13 @@
 
 .problem-table th {
   background-color: #1e1e1e;
-  color: #c678dd;
+  color: #61afef;
+  cursor: default;
 }
 
 .problem-table tr {
   cursor: pointer;
+  background-color: #1e1e1e;
 }
 
 .problem-table tr:hover {

@@ -20,26 +20,8 @@
   background-color: #3e4451;
   color: #61afef;
 }
-/* 
-.pagination {
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
-}
-
-.pagination button {
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  margin: 0 5px;
-  cursor: pointer;
-}
 
 .pagination button.active {
-  background-color: #45a049;
+  color: #3e4451;
+  background-color: #61afef;
 }
-
-.pagination button:hover:not(.active) {
-  background-color: #ddd;
-} */
