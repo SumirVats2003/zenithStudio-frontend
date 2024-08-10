@@ -31,10 +31,15 @@ const ProblemList = ({ problems, onSelect, onSort, sortOrder }) => {
           {problems.map(problem => (
             <tr key={problem.id} onClick={() => onSelect(problem)}>
               <td>{problem.title}</td>
-              <td style={{ color: getDifficultyColor(problem.difficulty) }}>
+              <td
+                style={{
+                  color: getDifficultyColor(problem.difficulty),
+                  textAlign: 'center',
+                }}
+              >
                 {problem.difficulty || 'Medium'}
               </td>
-              <td>
+              <td style={{ textAlign: 'center' }}>
                 {problem.tags.map((tag, index) => (
                   <span key={index}>
                     {tag}

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import './Navbar.css'
 import Logo from '../assets/zblack.png'
 
-const Navbar = ({ pgvisible, arvisible, bgvisible }) => {
+const Navbar = ({ pgvisible, arvisible, bgvisible, isAuthenticated }) => {
   return (
     <div className='navbar'>
       <Link to='/home' className='navbar-logo'>
@@ -31,6 +31,13 @@ const Navbar = ({ pgvisible, arvisible, bgvisible }) => {
           </Link>
         ) : (
           ''
+        )}
+        {isAuthenticated ? (
+          ''
+        ) : (
+          <Link to='/login' className='nav-link'>
+            Login
+          </Link>
         )}
       </div>
     </div>
