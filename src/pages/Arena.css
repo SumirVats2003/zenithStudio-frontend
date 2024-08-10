@@ -76,3 +76,29 @@
 .upload-button:hover {
   background-color: darkgreen;
 }
+
+.search-container {
+  margin: 0px 1rem;
+  display: flex;
+  gap: 10px;
+}
+
+.search-container input {
+  width: 300px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+.search-container button {
+  background-color: #61afef;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.search-container button:hover {
+  background-color: #008cff;
+}

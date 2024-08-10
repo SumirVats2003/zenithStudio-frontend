@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Navbar from '../components/Navbar'
 import ProblemList from '../components/ProblemList'
 import Pagination from '../components/Pagination'
+import SearchComponent from '../components/SearchComponent'
 import './Arena.css'
 
 const Arena = () => {
@@ -36,11 +37,17 @@ const Arena = () => {
     setCurrentPage(pageNumber)
   }
 
+  const handleSearchResults = searchResults => {
+    setProblems(searchResults)
+    setCurrentPage(1)
+  }
+
   return (
     <>
       <Navbar pgvisible={true} arvisible={false} bgvisible={true} />
       <div className='arena-container'>
         <div className='button-container'>
+          <SearchComponent onSearchResults={handleSearchResults} />
           <button
             className='upload-button'
             onClick={() => (window.location.href = '/upload')}
