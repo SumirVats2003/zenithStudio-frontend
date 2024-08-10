@@ -95,9 +95,8 @@ const Playground = () => {
     }
 
     const requestBody = {
-      clientId: 'f20ac288b8c74e8ca64627ab90d4a2d5',
-      clientSecret:
-        '217da182de1be8a3e827cfa408957a7dae9e226d33a9d9d5d257d1dafa624d78',
+      clientId: import.meta.env.VITE_CLIENT_ID,
+      clientSecret: import.meta.env.VITE_CLIENT_SECRET,
       script: code,
       language: modLang,
       versionIndex: '3',
