@@ -47,6 +47,7 @@
   border: 1px solid #ddd;
   border-radius: 10px;
   transition: transform 0.3s, box-shadow 0.3s;
+  background-color: #1d1d1d;
 }
 
 .contest-card h3 {

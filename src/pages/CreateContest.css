@@ -29,10 +29,10 @@ label {
   margin-bottom: 10px;
 }
 
-input[type='text'],
-input[type='number'],
-input[type='datetime-local'],
-textarea {
+.create-contest-container input[type='text'],
+.create-contest-container input[type='number'],
+.create-contest-container input[type='datetime-local'],
+.create-contest-container textarea {
   width: 100%;
   padding: 10px;
   margin-top: 5px;
