@@ -14,7 +14,12 @@ const Battleground = () => {
           `${import.meta.env.VITE_API_URL}/api/contests/all`,
         )
         const data = await response.json()
-        setContests(data)
+
+        // Sort contests by start time, latest first
+        const sortedContests = data.sort(
+          (a, b) => new Date(b.startTime) - new Date(a.startTime),
+        )
+        setContests(sortedContests)
       } catch (error) {
         console.error('Error fetching contests:', error)
       }
