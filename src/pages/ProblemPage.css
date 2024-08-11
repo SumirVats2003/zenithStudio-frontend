@@ -37,3 +37,16 @@
   height: 100%;
   margin-bottom: 20px;
 }
+
+.leaderboard-button {
+  background-color: green;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.leaderboard-button:hover {
+  background-color: darkgreen;
+}

@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Navbar from '../components/Navbar'
 import './CreateContest.css'
 
 const CreateContest = () => {
   const [formData, setFormData] = useState({
     contestName: '',
+    title: '',
     description: '',
     timeDuration: '',
     startTime: '',
@@ -13,22 +14,36 @@ const CreateContest = () => {
     createdBy: localStorage.getItem('authToken'),
     testCases: [{ input: '', expectedOutput: '' }],
     examples: [{ input: '', output: '', explanation: '' }],
+    constraints: '', // Added field for constraints
     tags: [''],
     hints: [''],
   })
+
+  const [currentDateTime, setCurrentDateTime] = useState('')
+
+  useEffect(() => {
+    const now = new Date()
+    const formattedDateTime = now.toISOString().slice(0, 16) // Format as 'YYYY-MM-DDTHH:MM'
+    setCurrentDateTime(formattedDateTime)
+  }, [])
 
   const handleChange = e => {
     const { name, value } = e.target
     let updatedData = { ...formData, [name]: value }
 
-    // Automatically calculate the end time based on start time and duration
     if (name === 'startTime' || name === 'timeDuration') {
       const startTime = new Date(updatedData.startTime)
       const duration = parseInt(updatedData.timeDuration, 10)
 
       if (startTime && !isNaN(duration)) {
         const endTime = new Date(startTime.getTime() + duration * 60000)
-        updatedData.endTime = endTime.toISOString().slice(0, 16) // Format to 'YYYY-MM-DDTHH:MM'
+        const endTimeLocal = new Date(
+          endTime.getTime() - endTime.getTimezoneOffset() * 60000,
+        )
+          .toISOString()
+          .slice(0, 16)
+
+        updatedData.endTime = endTimeLocal
       }
     }
 
@@ -72,9 +87,23 @@ const CreateContest = () => {
     }))
   }
 
+  const convertToIST = dateTimeUTC => {
+    const date = new Date(dateTimeUTC)
+    const offsetInMilliseconds = 5.5 * 60 * 60 * 1000
+    return new Date(date.getTime() + offsetInMilliseconds)
+      .toISOString()
+      .slice(0, 16)
+  }
+
   const handleSubmit = async e => {
     e.preventDefault()
     try {
+      const adjustedFormData = {
+        ...formData,
+        startTime: convertToIST(formData.startTime),
+        endTime: convertToIST(formData.endTime),
+      }
+
       const response = await fetch(
         `${import.meta.env.VITE_API_URL}/api/contests/upload`,
         {
@@ -82,21 +111,23 @@ const CreateContest = () => {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(formData),
+          body: JSON.stringify(adjustedFormData),
         },
       )
       if (response.ok) {
         alert('Contest created successfully!')
         setFormData({
           contestName: '',
+          title: '',
           description: '',
           timeDuration: '',
           startTime: '',
           endTime: '',
           prize: '',
-          createdBy: 'user123',
+          createdBy: localStorage.getItem('authToken'),
           testCases: [{ input: '', expectedOutput: '' }],
           examples: [{ input: '', output: '', explanation: '' }],
+          constraints: '', // Reset constraints field
           tags: [''],
           hints: [''],
         })
@@ -127,6 +158,16 @@ const CreateContest = () => {
               />
             </label>
             <label>
+              Title:
+              <input
+                type='text'
+                name='title'
+                value={formData.title}
+                onChange={handleChange}
+                required
+              />
+            </label>
+            <label>
               Description:
               <textarea
                 name='description'
@@ -143,6 +184,7 @@ const CreateContest = () => {
                 name='startTime'
                 value={formData.startTime}
                 onChange={handleChange}
+                min={currentDateTime}
                 required
               />
             </label>
@@ -163,6 +205,7 @@ const CreateContest = () => {
                 name='endTime'
                 value={formData.endTime}
                 onChange={handleChange}
+                min={currentDateTime}
                 required
               />
             </label>
@@ -174,6 +217,15 @@ const CreateContest = () => {
                 value={formData.prize}
                 onChange={handleChange}
                 required
+              />
+            </label>
+            <label>
+              Constraints:
+              <textarea
+                name='constraints'
+                value={formData.constraints}
+                onChange={handleChange}
+                rows='3'
               />
             </label>
             <label>
@@ -272,7 +324,6 @@ const CreateContest = () => {
                     name='explanation'
                     value={example.explanation}
                     onChange={e => handleExampleChange(index, e)}
-                    required
                     rows='3'
                   />
                 </label>

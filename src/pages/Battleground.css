@@ -65,3 +65,33 @@
 .join-contest-btn:hover {
   background-color: #0056b3;
 }
+
+.contest-status {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-weight: bold;
+  color: white;
+}
+
+.status-ongoing {
+  background-color: green;
+}
+
+.status-upcoming {
+  background-color: blue;
+}
+
+.status-finished {
+  background-color: grey;
+}
+
+.contest-card {
+  position: relative;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
