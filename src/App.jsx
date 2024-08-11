@@ -9,6 +9,7 @@ import UploadPage from './pages/UploadPage'
 import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
 import Battleground from './pages/Battleground'
+import CreateContest from './pages/CreateContest'
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
@@ -28,6 +29,7 @@ const App = () => {
         />
         <Route path='/register' element={<RegisterPage />} />
         <Route path='/battleground' element={<Battleground />} />
+        <Route path='/createcontest' element={<CreateContest />} />
       </Routes>
     </Router>
   )

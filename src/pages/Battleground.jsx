@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Navbar from '../components/Navbar'
 import './Battleground.css'
+import { Link } from 'react-router-dom'
 
 const Battleground = () => {
   const [contests, setContests] = useState([])
@@ -47,11 +48,13 @@ const Battleground = () => {
           </p>
         </div>
         <div className='battleground-actions'>
-          <button className='create-contest-btn'>Create a Contest</button>
-          <button className='view-leaderboard-btn'>View Leaderboard</button>
+          <Link to={'/createcontest'}>
+            <button className='create-contest-btn'>Create a Contest</button>
+          </Link>
+          {/* <button className='view-leaderboard-btn'>View Leaderboard</button> */}
         </div>
         <div className='ongoing-contests'>
-          <h2>Ongoing Contests</h2>
+          <h2>Contests</h2>
           <div className='contest-list'>
             {contests.length > 0 ? (
               contests.map(contest => (
