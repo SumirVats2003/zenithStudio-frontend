@@ -4,6 +4,11 @@ import FeatureCard from '../components/FeatureCard'
 import './Home.css'
 
 const Home = () => {
+  const isLoggedin = localStorage.getItem('authToken') ? true : false
+  const desc = isLoggedin
+    ? 'Compete in ongoing contests, view leaderboards, and host your own contests.'
+    : 'Login to compete.'
+
   return (
     <div className='home-container'>
       <Navbar pgvisible={false} arvisible={false} bgvisible={false} />
@@ -26,8 +31,9 @@ const Home = () => {
           />
           <FeatureCard
             title='Coding Battleground'
-            description='Compete in ongoing contests, view leaderboards, and host your own contests.'
+            description={desc}
             link='/battleground'
+            disabled={!isLoggedin}
           />
         </div>
       </div>

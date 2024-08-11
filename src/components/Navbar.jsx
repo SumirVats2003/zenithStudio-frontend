@@ -8,10 +8,8 @@ const Navbar = ({ pgvisible, arvisible, bgvisible }) => {
   const isAuthenticated = localStorage.getItem('authToken') ? true : false
 
   const handleLogout = () => {
-    // Clear authentication state (e.g., remove tokens or user data)
-    // Redirect to the login page or home page
     localStorage.removeItem('authToken')
-    navigate('/login')
+    navigate('/home')
   }
 
   return (
@@ -31,7 +29,7 @@ const Navbar = ({ pgvisible, arvisible, bgvisible }) => {
             Arena
           </Link>
         )}
-        {bgvisible && (
+        {bgvisible && isAuthenticated && (
           <Link to='/battleground' className='nav-link'>
             Battleground
           </Link>
