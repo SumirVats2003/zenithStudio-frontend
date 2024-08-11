@@ -114,35 +114,55 @@ const ProblemPage = () => {
   }, [fontSize, wordWrap, theme])
 
   const handleRunCode = async () => {
-    setOutput('Running...')
+    setOutput('Running all test cases...')
+    let allPassed = true
+    const results = []
 
-    const requestBody = {
-      code: code,
-      input: input,
+    for (const testCase of problem.testCases) {
+      const requestBody = {
+        code: code,
+        input: testCase.input,
+      }
+
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_API_URL}/api/execute`,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(requestBody),
+          },
+        )
+
+        const result = await response.json()
+        if (result.error) {
+          allPassed = false
+          results.push(`Test Case Failed: ${result.error}`)
+        } else {
+          const output = result.output.trim()
+          const expectedOutput = testCase.expectedOutput.trim()
+
+          if (output === expectedOutput) {
+            results.push('Test Case Passed')
+          } else {
+            allPassed = false
+            results.push(
+              `Test Case Failed: \nExpected: ${expectedOutput}\nGot: ${output}`,
+            )
+          }
+        }
+      } catch (error) {
+        allPassed = false
+        results.push(`Error: ${error.message}`)
+      }
     }
 
-    try {
-      const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/execute`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(requestBody),
-        },
-      )
-
-      const result = await response.json()
-      if (result.error) {
-        setOutput(`Error: ${result.error}`)
-      } else {
-        setOutput(
-          `Output:\n${result.output}\nMemory: ${result.memoryUsage} KB\nExecution Time: ${result.executionTime}ms`,
-        )
-      }
-    } catch (error) {
-      setOutput(`Error: ${error.message}`)
+    if (allPassed) {
+      setOutput('All test cases passed! Problem accepted!')
+    } else {
+      setOutput(`Some test cases failed:\n\n${results.join('\n\n')}`)
     }
   }
 
